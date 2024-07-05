@@ -1,0 +1,26 @@
+<%- include("./includes/head") %>
+<section class="mx-auto">
+  <h1 class="title">Create a new post here!</h1>
+  <form action="/admin" method="post">
+    <div>
+      <label for="title">Enter Title</label>
+      <input type="text" id="title" name="title" required />
+    </div>
+    <div>
+      <label for="photo">Enter Photo</label>
+      <input type="text" id="photo" name="photo" required />
+    </div>
+    <div>
+      <label for="description">Enter description</label>
+      <textarea
+        type="text"
+        id="description"
+        name="description"
+        required
+      ></textarea>
+    </div>
+    <button>Create Post</button>
+    <a href="/">Go back home</a>
+  </form>
+</section>
+<%- include("./includes/foot") %>
