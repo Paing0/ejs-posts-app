@@ -1,8 +1,15 @@
 <%- include("./includes/head") %>
 <section class="details">
   <h1><%= post.title %></h1>
-  <img src="<%= post.image_url%>" alt="<%= post.title %>" />
+  <img src="<%= post.imageUrl%>" alt="<%= post.title %>" />
   <p><%= post.description %></p>
-  <a href="/">Go back home</a>
+  <hr />
+  <form action="/admin/post/<%= post.id %>" method="post">
+    <a class="inline-block mr-2" href="/admin/post-edit/<%= post.id %>"
+      >Edit post</a
+    >
+    <button class="inline-block">Delete Post</button>
+    <a href="/" class="inline-block right">Go back home</a>
+  </form>
 </section>
 <%- include("./includes/foot") %>
