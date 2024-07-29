@@ -1,3 +1,6 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
 .title {
   text-align: center;
 }
@@ -10,9 +13,10 @@ a {
   margin: 10px 0;
   color: #fff;
   background-color: #000;
-  padding: 8px 10px;
+  padding: 10px;
   width: fit-content;
   text-decoration: none;
+  font-size: 16px;
 }
 label {
   display: block;
@@ -29,8 +33,11 @@ button {
   margin: 10px 0;
   color: #fff;
   background-color: #000;
-  padding: 8px 0;
+  padding: 10px;
   width: 100%;
+  width: fit-content;
+  border: none;
+  font-size: 16px;
 }
 .mx-auto {
   width: 40%;
@@ -60,4 +67,16 @@ button {
 }
 .details p {
   font-size: 17px;
+}
+.mr-2 {
+  margin-right: 8px;
+}
+.right {
+  float: right;
+}
+.inline-block {
+  display: inline-block;
+}
+.ml-2 {
+  margin-left: 8px;
 }
