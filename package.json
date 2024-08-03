@@ -9,5 +9,9 @@
   },
   "scripts": {
     "start": "node --watch app"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "globals": "^15.9.0"
   }
 }

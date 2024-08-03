@@ -1,6 +1,6 @@
-const moongose = require("mongoose");
+const mongoose = require("mongoose")
 
-const { Schema, model } = moongose;
+const { Schema, model } = mongoose
 
 const postSchema = new Schema({
   title: {
@@ -9,11 +9,16 @@ const postSchema = new Schema({
   },
   description: {
     type: String,
-  required: true,
+    required: true,
   },
   imgUrl: {
     type: String,
     required: true,
   },
-});
-module.exports = model("Post", postSchema);
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+})
+module.exports = model("Post", postSchema)

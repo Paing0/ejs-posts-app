@@ -13,7 +13,10 @@
     <a href="/admin/create-post">Create a new post</a>
     <% } %> <% for(let post of postsArr) { %>
     <div class="post-box">
-      <h3 class="post-title"><%= post.title %></h3>
+     <div>
+       <h3 class="post-title"><%= post.title %></h3>
+       <p>Posted by @<%= post.userId.username %></p>
+     </div>
       <a class="btn" href="/post/<%= post._id %>">See More...</a>
     </div>
     <% } %>
