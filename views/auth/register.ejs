@@ -2,6 +2,7 @@
 <section class="mx-auto">
   <h1 class="title">Register a new account</h1>
   <form action="/register" method="post">
+    <input hidden value="<%= csrfToken %>" name="_csrf" />
     <div>
       <label for="title">Enter email</label>
       <input type="text" id="password" name="email" />

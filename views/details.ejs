@@ -10,6 +10,7 @@
     method="post"
     class="inline-block right"
   >
+    <input hidden value="<%= csrfToken %>" name="_csrf" />
     <button>Delete</button>
   </form>
   <a class="inline-block mr-2 right" href="/admin/edit/<%= post._id %>"
