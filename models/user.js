@@ -1,15 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
-const { Schema, model } = mongoose;
+const { Schema, model } = mongoose
 
 const userSchema = new Schema({
-  username: {
-    type: String,
-    unique: true,
-    minLength: 3,
-    maxLength: 10,
-    required: true,
-  },
   email: {
     type: String,
     unique: true,
@@ -20,6 +13,6 @@ const userSchema = new Schema({
     minLength: 4,
     required: true,
   },
-});
+})
 
-module.exports = model("User", userSchema);
+module.exports = model("User", userSchema)

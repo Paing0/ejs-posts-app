@@ -4,7 +4,6 @@ exports.createPost = (req, res) => {
   const { title, description, photo } = req.body
   Post.create({ title, description, imgUrl: photo, userId: req.user })
     .then((result) => {
-      console.log(result)
       res.redirect("/")
     })
     .catch((err) => console.log(err))
@@ -16,7 +15,6 @@ exports.renderCreatePage = (req, res) => {
 
 exports.renderHomePage = (req, res) => {
   // const cookie = req.get("Cookie").split("=")[1].trim() === "true" || false
-  console.log(req.session.isLogin)
   Post.find()
     .select("title")
     .populate("userId", "username")
@@ -60,7 +58,6 @@ exports.updatePost = (req, res) => {
       return post.save()
     })
     .then(() => {
-      console.log("Post Updated")
       res.redirect("/")
     })
     .catch((err) => console.log(err))
@@ -70,7 +67,6 @@ exports.deletePost = (req, res) => {
   const { postId } = req.params
   Post.findByIdAndDelete(postId)
     .then(() => {
-      console.log("Post Deleted")
       res.redirect("/")
     })
     .catch((err) => console.log(err))
