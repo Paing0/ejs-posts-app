@@ -3,7 +3,13 @@ const bcrypt = require("bcrypt")
 
 // render register page
 exports.getRegisterPage = (req, res) => {
-  res.render("auth/register", { title: "Register" })
+  let errorMsg = req.flash("error")
+  if (errorMsg.length > 0) {
+    errorMsg = errorMsg[0]
+  } else {
+    errorMsg = null
+  }
+  res.render("auth/register", { title: "Register", errorMsg })
 }
 
 // handle register
@@ -12,6 +18,7 @@ exports.registerAccount = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (user) {
+        req.flash("error", "Email already exist.")
         return res.redirect("/register")
       }
       return bcrypt.hash(password, 10).then((hashedPassword) => {
@@ -26,7 +33,13 @@ exports.registerAccount = (req, res) => {
 
 // render login page
 exports.getLoginPage = (req, res) => {
-  res.render("auth/login", { title: "Login" })
+  let errorMsg = req.flash("error")
+  if (errorMsg.length > 0) {
+    errorMsg = errorMsg[0]
+  } else {
+    errorMsg = null
+  }
+  res.render("auth/login", { title: "Login", errorMsg })
 }
 
 // handle login
@@ -35,6 +48,10 @@ exports.postLoginData = (req, res) => {
   User.findOne({ email })
     .then((user) => {
       if (!user) {
+        req.flash(
+          "error",
+          "Wrong user credentials. Check your email and password again."
+        )
         return res.redirect("/login")
       }
       bcrypt
@@ -43,8 +60,8 @@ exports.postLoginData = (req, res) => {
           if (isMatch) {
             req.session.isLogin = true
             req.session.userInfo = user
+            req.flash("success", "Login successful.")
             return req.session.save((err) => {
-              console.log(err)
               res.redirect("/")
             })
           }

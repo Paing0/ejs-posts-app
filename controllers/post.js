@@ -15,6 +15,12 @@ exports.renderCreatePage = (req, res) => {
 }
 
 exports.renderHomePage = (req, res) => {
+  let loginSuccessful = req.flash("success")
+  if (loginSuccessful.length > 0) {
+    loginSuccessful = loginSuccessful[0]
+  } else {
+    loginSuccessful = null
+  }
   Post.find()
     .select("title")
     .populate("userId", "email")
@@ -23,6 +29,7 @@ exports.renderHomePage = (req, res) => {
       res.render("home", {
         title: "Home",
         postsArr: posts,
+        loginSuccessful,
       })
     )
     .catch((err) => console.log(err))

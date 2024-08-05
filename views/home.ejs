@@ -1,35 +1,43 @@
-    <%- include("./includes/head")  %>
-    <h1 class="title">Home Page</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla id
-      similique vero! Repellat animi aliquid corporis ad. Tenetur hic voluptatum
-      labore! Officiis ea quis eos quas saepe, veniam at.
-    </p>
-    <% if(isLogin) { %>
-    <a href="/admin/create-post">Add a new post</a>
-    <form action="/logout" method="post">
-      <input hidden value="<%= csrfToken %>" name="_csrf">
-      <button href="/logout">Logout</button>
-    </form>
-    <% } else { %>
-    <a href="/login">Login to an existing account</a>
-    <a href="/register">Create a new account</a>
-    <% } %>
-    <hr />
-    <h1 title="">Posts</h1>
-    <% if (postsArr.length === 0) { %>
-    <h3>No post yet.</h3>
-    <a href="/admin/create-post">Create a new post</a>
-    <% } %> <% for(let post of postsArr) { %>
-    <div class="post-box">
-     <div>
-       <h3 class="post-title"><%= post.title %></h3>
-       <p>Posted by <%= post.userId.email %></p>
-     </div>
-      <a class="btn" href="/post/<%= post._id %>">See More...</a>
-    </div>
-    <% } %>
-  </body>
-</html>
-
-    <%- include("./includes/foot")  %>
+<%- include("./includes/head") %>
+<h1 class="title">Home Page</h1>
+<% if(loginSuccessful){ %>
+<p class="success-msg"><%= loginSuccessful %></p>
+<% } %>
+<!-- remove msg after 3sec -->
+<p>
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla id
+  similique vero! Repellat animi aliquid corporis ad. Tenetur hic voluptatum
+  labore! Officiis ea quis eos quas saepe, veniam at.
+</p>
+<% if(isLogin) { %>
+<a href="/admin/create-post">Add a new post</a>
+<form action="/logout" method="post">
+  <input hidden value="<%= csrfToken %>" name="_csrf" />
+  <button href="/logout">Logout</button>
+</form>
+<% } else { %>
+<a href="/login">Login to an existing account</a>
+<a href="/register">Create a new account</a>
+<% } %>
+<hr />
+<h1 title="">Posts</h1>
+<% if (postsArr.length === 0) { %>
+<h3>No post yet.</h3>
+<a href="/admin/create-post">Create a new post</a>
+<% } %> <% for(let post of postsArr) { %>
+<div class="post-box">
+  <div>
+    <h3 class="post-title"><%= post.title %></h3>
+    <p>Posted by <%= post.userId.email %></p>
+  </div>
+  <a class="btn" href="/post/<%= post._id %>">See More...</a>
+</div>
+<% } %> <%- include("./includes/foot") %>
+<script>
+  setTimeout(() => {
+    const successMsg = document.querySelector(".success-msg")
+    if (successMsg) {
+      successMsg.remove()
+    }
+  }, 3000)
+</script>

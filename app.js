@@ -7,6 +7,7 @@ const session = require("express-session")
 const mongoStore = require("connect-mongodb-session")(session)
 const { isLogin } = require("./middlewares/is-login")
 const csrf = require("csurf")
+const flash = require("connect-flash")
 
 const store = new mongoStore({
   uri: process.env.MONGODB_URI,
@@ -42,6 +43,7 @@ app.use(
   })
 )
 app.use(csrfProtect)
+app.use(flash())
 
 app.use((req, res, next) => {
   if (req.session.isLogin === undefined) {
