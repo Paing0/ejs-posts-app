@@ -18,4 +18,19 @@ router.post("/login", authController.postLoginData)
 // handle logout
 router.post("/logout", authController.postLogoutData)
 
+// render reset password page
+router.get("/reset-password", authController.getResetPage)
+
+// render feedback page
+router.get("/feedback", authController.getFeedbackPage)
+
+// send reset password link
+router.post("/reset", authController.resetPasswordLink)
+
+// render password changing page
+router.get("/reset-password/:token", authController.getNewPasswordPage)
+
+// change new password
+router.post("/change-new-password", authController.changeNewPassword)
+
 module.exports = router
