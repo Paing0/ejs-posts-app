@@ -10,7 +10,12 @@
   labore! Officiis ea quis eos quas saepe, veniam at.
 </p>
 <% if(isLogin) { %>
-<a href="/admin/create-post">Add a new post</a>
+<a href="/admin/create-post"
+  >Add a new post as
+  <span class="user-email">
+    <%= currentUserEmail? currentUserEmail : "" %>
+  </span></a
+>
 <form action="/logout" method="post">
   <input hidden value="<%= csrfToken %>" name="_csrf" />
   <button href="/logout">Logout</button>
@@ -20,8 +25,8 @@
 <a href="/register">Create a new account</a>
 <% } %>
 <hr />
-<h1 title="">Posts</h1>
-<% if (postsArr.length === 0) { %>
+<h1 class="title">Posts</h1>
+<% if (postsArr.length === 0 && isLogin) { %>
 <h3>No post yet.</h3>
 <a href="/admin/create-post">Create a new post</a>
 <% } %> <% for(let post of postsArr) { %>
