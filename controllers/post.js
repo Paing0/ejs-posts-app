@@ -21,7 +21,7 @@ exports.renderHomePage = (req, res) => {
     loginSuccessful = null //else
   }
   Post.find() // find all posts
-    .select("title") // select only the title field
+    .select("title description imgUrl") // select the title and description field
     .populate("userId", "email") // populate the userId field with the email from the User model
     .sort({ title: 1 }) // sort posts by title in ascending order
     .then((posts) =>

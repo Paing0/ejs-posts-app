@@ -48,7 +48,7 @@ exports.registerAccount = (req, res) => {
               from: process.env.SENDER_MAIL,
               to: email,
               subject: "Register Successfully",
-              html: `<h1>Registered account successfully</h1><p>You can login to the site using ${email}</p>`,
+              html: `<h1>Registered account successfully</h1><p>You have created an account using ${email} to our site.</p>`,
             })
             .catch((err) => {
               console.log(err)
