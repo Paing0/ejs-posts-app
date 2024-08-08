@@ -40,15 +40,17 @@
 <div>
   <h1 class="title">Recent posts</h1>
   <% if (postsArr.length === 0 && isLogin) { %>
-  <h3>No post yet.</h3>
-  <a href="/admin/create-post">Create a new post</a>
+  <div class="no-post-yet">
+    <h3>No post yet.</h3>
+    <a href="/admin/create-post">Create a new post</a>
+  </div>
   <% } %>
 </div>
 <div class="post-container">
   <% for(let post of postsArr) { %>
   <div class="post-box">
     <h3 class="post-title"><%= post.title %></h3>
-    <p class="post-email">Posted by <%= post.userId.email %></p>
+    <p class="post-email">Posted by: <%= post.userId.email %></p>
     <img class="post-img" src="<%= post.imgUrl %>" alt="<%= post.title %>" />
     <p class="post-desc"><%= post.description.substr(0, 200) %></p>
     <a class="btn" href="/post/<%= post._id %>">See More...</a>

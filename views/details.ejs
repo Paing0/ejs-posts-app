@@ -1,12 +1,13 @@
 <%- include("./includes/head") %>
 <section class="details">
   <h1 class="title"><%= post.title %></h1>
+  <p class="details-email">Post by - <%= post.userId.email %></p>
+  <p class="details-timestamps">Uploaded at - <%= date %></p>
   <img src="<%= post.imgUrl %>" alt="<%= post.title %>" />
-  <p><%= post.description %></p>
-
+  <p class="desc"><%= post.description %></p>
   <a href="/" class="inline-block">Go back home</a>
   <!-- if the userId from the post is equal to the current login user Id -->
-  <% if(post.userId.toString() === currentLoginUserId.toString()) {%>
+  <% if(post.userId._id.toString() === currentLoginUserId.toString()) {%>
   <form
     action="/admin/delete/<%= post._id %>"
     method="post"

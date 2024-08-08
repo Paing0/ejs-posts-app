@@ -22,6 +22,9 @@
   justify-content: center;
   margin-bottom: 15px;
 }
+.no-post-yet {
+  padding-left: 80px;
+}
 .login-div a,
 .login-div button {
   margin: 10px;
@@ -90,11 +93,13 @@
   object-fit: cover;
   margin-bottom: 20px;
 }
-.details p {
+.details .desc {
   font-size: 21px;
 }
-.details hr {
-  margin: 20px 0;
+.details-email,
+.details-timestamps {
+  margin: 5px 0;
+  font-weight: 500;
 }
 a {
   display: block;

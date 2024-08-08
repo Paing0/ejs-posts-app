@@ -1,16 +1,24 @@
 <%- include("./includes/head") %>
 <section class="mx-auto">
   <h1 class="title">Edit your post here!</h1>
+  <% if(errorMsg){ %>
+  <p class="error-msg"><%= errorMsg %></p>
+  <% } %>
   <form action="/admin/edit-post" method="post">
     <input hidden value="<%= csrfToken %>" name="_csrf" />
-    <input type="text" value="<%= post._id %>" name="postId" hidden />
+    <input
+      type="text"
+      value="<%= isValidationFail? postId: post._id %>"
+      name="postId"
+      hidden
+    />
     <div>
       <label for="title">Enter Title</label>
       <input
         type="text"
         id="title"
         name="title"
-        value="<%= post.title %>"
+        value="<%= isValidationFail ? oldFormData.title : post.title %>"
         required
       />
     </div>
@@ -20,14 +28,14 @@
         type="text"
         id="photo"
         name="photo"
-        value="<%= post.imgUrl %>"
+        value="<%= isValidationFail ? oldFormData.photo : post.imgUrl %>"
         required
       />
     </div>
     <div>
       <label for="description">Enter description</label>
       <textarea type="text" id="description" name="description" required>
-<%= post.description%></textarea
+<%= isValidationFail ? oldFormData.description : post.description %></textarea
       >
     </div>
     <button>Edit Post</button>

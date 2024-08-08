@@ -1,27 +1,48 @@
 <%- include("./includes/head") %>
 <section class="mx-auto">
   <h1 class="title">Create a new post here!</h1>
+  <% if(errorMsg){ %>
+  <p class="error-msg"><%= errorMsg %></p>
+  <% } %>
   <form action="/admin" method="post">
     <input hidden value="<%= csrfToken %>" name="_csrf" />
     <div>
       <label for="title">Enter Title</label>
-      <input type="text" id="title" name="title" required />
+      <input
+        type="text"
+        id="title"
+        name="title"
+        required
+        value="<%= oldFormData.title %>"
+      />
     </div>
     <div>
       <label for="photo">Enter Photo</label>
-      <input type="text" id="photo" name="photo" required />
+      <input
+        type="text"
+        id="photo"
+        name="photo"
+        required
+        value="<%= oldFormData.photo %>"
+      />
     </div>
     <div>
       <label for="description">Enter description</label>
-      <textarea
-        type="text"
-        id="description"
-        name="description"
-        required
-      ></textarea>
+      <textarea type="text" id="description" name="description" required>
+<%= oldFormData.description %></textarea
+      >
     </div>
     <button class="right">Create Post</button>
     <a href="/">Go back home</a>
   </form>
 </section>
-<%- include("./includes/foot") %>
+<%- include("./includes/foot") %> Lorem ipsum dolor sit amet, consectetur
+adipisicing elit. Eius est ea, accusantium mollitia veniam possimus quibusdam
+incidunt neque animi error unde quod nostrum, officiis inventore aliquam, quae
+iste. Esse placeat amet excepturi quasi facilis velit quo ab, quas laudantium
+repudiandae at harum et corporis vero possimus quibusdam, delectus nisi magni,
+eum ex? Eveniet, itaque beatae vero amet iusto modi fugit suscipit id
+repellendus quas commodi ea explicabo et veritatis aspernatur molestiae aperiam
+totam. Expedita unde accusantium a? Veritatis illum voluptatem distinctio. Iste
+vitae nobis voluptatem, impedit sint facere exercitationem tenetur doloremque
+fuga quaerat autem corrupti facilis sed architecto consequatur! Voluptate.

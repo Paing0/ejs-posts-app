@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt")
 const crypto = require("crypto")
 const nodemailer = require("nodemailer")
 const dotenv = require("dotenv").config
+const { validationResult } = require("express-validator")
 
 // setup for nodemailer
 const transporter = nodemailer.createTransport({
@@ -21,42 +22,54 @@ exports.getRegisterPage = (req, res) => {
   } else {
     errorMsg = null
   }
-  res.render("auth/register", { title: "Register", errorMsg })
+  res.render("auth/register", {
+    title: "Register",
+   errorMsg,
+    oldFormData: { email: "", password: "" },
+  })
 }
 
 // handle register
 exports.registerAccount = (req, res) => {
   const { email, password } = req.body
-  User.findOne({ email }) // find a user in db with the email from req.body
-    .then((user) => {
-      //if a user with provided exist,
-      if (user) {
-        req.flash("error", "Email already exist.")
-        return res.redirect("/register")
-      }
-      // else hashed the password using bcrypt with salt 10
-      return bcrypt.hash(password, 10).then((hashedPassword) => {
-        // create a new user with the provided email and hashedPassword
-        return User.create({
-          email,
-          password: hashedPassword,
-        }).then(() => {
-          res.redirect("/login")
-          // send mail to that email
-          transporter
-            .sendMail({
-              from: process.env.SENDER_MAIL,
-              to: email,
-              subject: "Register Successfully",
-              html: `<h1>Registered account successfully</h1><p>You have created an account using ${email} to our site.</p>`,
-            })
-            .catch((err) => {
-              console.log(err)
-            })
-        })
-      })
+  // extracts the validation errors from the request object.
+ // 'validationResult' is a method from 'express-validator' that collects all errors generated during the validation process.
+  const errors = validationResult(req)
+  // Checks if there are any validation errors.
+  if (!errors.isEmpty()) {
+    // If there are errors, respond with a 422 status
+    return res.status(422).render("auth/register", {
+      title: "Register",
+
+      // Extracts the first error message from the array of validation errors and passes it to the view.
+      // 'errors.array()' converts the validation errors to an array.
+      // '[0]' accesses the first error object in the array.
+      // '.msg' retrieves the message associated with that error, which will be displayed on the registration page.
+      errorMsg: errors.array()[0].msg,
+      oldFormData: { email, password },
     })
-    .catch((err) => console.log(err))
+  }
+  // hash the password using bcrypt with salt 10
+  bcrypt.hash(password, 10).then((hashedPassword) => {
+    // create a new user with the provided email and hashedPassword
+    return User.create({
+      email,
+      password: hashedPassword,
+    }).then(() => {
+      res.redirect("/login")
+      // send mail to that email
+      transporter
+        .sendMail({
+          from: process.env.SENDER_MAIL,
+          to: email,
+          subject: "Register Successfully",
+          html: `<h1>Registered account successfully</h1><p>You have created an account using ${email} to our site.</p>`,
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
+  })
 }
 
 // render login page
@@ -67,20 +80,32 @@ exports.getLoginPage = (req, res) => {
   } else {
     errorMsg = null
   }
-  res.render("auth/login", { title: "Login", errorMsg })
+  res.render("auth/login", {
+    title: "Login",
+    errorMsg,
+    oldFormData: { email: "", password: "" },
+  })
 }
 
 // handle login
 exports.postLoginData = (req, res) => {
   const { email, password } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    res.status(422).render("auth/login", {
+      title: "Login",
+      errorMsg: errors.array()[0].msg,
+      oldFormData: { email, password },
+    })
+  }
   User.findOne({ email }) // find a user in db with the email from req.body
     .then((user) => {
       if (!user) {
-        req.flash(
-          "error",
-          "Wrong user credentials. Check your email and password again."
-        )
-        return res.redirect("/login")
+        return res.status(422).render("auth/login", {
+          title: "Login",
+          errorMsg: "Please check your email and password again",
+          oldFormData: { email, password },
+        })
       }
       // compare the password from req.body and the password in db
       bcrypt
@@ -95,7 +120,11 @@ exports.postLoginData = (req, res) => {
               console.log(err)
             })
           }
-          return res.redirect("/login")
+          res.status(422).render("auth/login", {
+            title: "Login",
+            errorMsg: "Please check your email and password again",
+            oldFormData: { email, password },
+          })
         })
         .catch((err) => console.log(err))
     })
@@ -117,7 +146,11 @@ exports.getResetPage = (req, res) => {
   } else {
     errorMsg = null
   }
-  res.render("auth/reset", { title: "Reset Password", errorMsg })
+  res.render("auth/reset", {
+    title: "Reset Password",
+    errorMsg,
+    oldFormData: { email: "" },
+  })
 }
 
 // render feedback page
@@ -128,6 +161,14 @@ exports.getFeedbackPage = (req, res) => {
 // send reset password link
 exports.resetPasswordLink = (req, res) => {
   const { email } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/reset", {
+      title: "Reset Password",
+      errorMsg: errors.array()[0].msg,
+      oldFormData: { email },
+    })
+  }
   // generate a buffer containing 32 random bytes
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
@@ -139,8 +180,11 @@ exports.resetPasswordLink = (req, res) => {
     User.findOne({ email }) // find email in db from req.body
       .then((user) => {
         if (!user) {
-          req.flash("error", "No account found with this email.")
-          return res.redirect("/reset-password")
+          return res.status(422).render("auth/reset", {
+            title: "Reset Password",
+            errorMsg: "Email doesn't exist, please check your email again",
+            oldFormData: { email },
+          })
         }
         // else
         user.resetToken = token
@@ -185,7 +229,8 @@ exports.getNewPasswordPage = (req, res) => {
         title: "Change password",
         errorMsg,
         resetToken: token,
-        user_id: user._id.toString(),
+        user_id: user._id,
+        oldFormData: { password: "", confirm_password: "" },
       })
     })
     .catch((err) => console.log(err))
@@ -193,6 +238,16 @@ exports.getNewPasswordPage = (req, res) => {
 
 exports.changeNewPassword = (req, res) => {
   const { password, confirm_password, user_id, resetToken } = req.body
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/new-password", {
+      title: "Change password",
+      errorMsg: errors.array()[0].msg,
+      resetToken,
+      user_id,
+      oldFormData: { password, confirm_password },
+    })
+  }
   let resetUser
   // check if the resetToken from db equals to the token from req.body
   // check if the tokenExpiration is in the future (i.e., token is still valid)
@@ -203,10 +258,8 @@ exports.changeNewPassword = (req, res) => {
     _id: user_id,
   })
     .then((user) => {
-      if (password === confirm_password) {
-        resetUser = user // store the user document in resetUser variable
-        return bcrypt.hash(password, 10) // hash the new password with bcrypt, using a salt round of 10
-      }
+      resetUser = user // store the user document in resetUser variable
+      return bcrypt.hash(password, 10) // hash the new password with bcrypt, using a salt round of 10
       // if passwords do not match, skip hashing and proceed to the next promise chain
     })
     .then((hashedPassword) => {
@@ -216,7 +269,7 @@ exports.changeNewPassword = (req, res) => {
       return resetUser.save()
     })
     .then(() => {
-      res.redirect("/login")
+      return res.redirect("/login")
     })
     .catch((err) => console.log(err))
 }
