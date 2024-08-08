@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 })
 
 // render register page
-exports.getRegisterPage = (req, res) => {
+exports.getRegisterPage = (req, res, next) => {
   let errorMsg = req.flash("error") // assign "error" from flash
   if (errorMsg.length > 0) {
     errorMsg = errorMsg[0] // if error exist assign the  message to errorMsg
@@ -24,16 +24,16 @@ exports.getRegisterPage = (req, res) => {
   }
   res.render("auth/register", {
     title: "Register",
-   errorMsg,
+    errorMsg,
     oldFormData: { email: "", password: "" },
   })
 }
 
 // handle register
-exports.registerAccount = (req, res) => {
+exports.registerAccount = (req, res, next) => {
   const { email, password } = req.body
   // extracts the validation errors from the request object.
- // 'validationResult' is a method from 'express-validator' that collects all errors generated during the validation process.
+  // 'validationResult' is a method from 'express-validator' that collects all errors generated during the validation process.
   const errors = validationResult(req)
   // Checks if there are any validation errors.
   if (!errors.isEmpty()) {
@@ -67,13 +67,17 @@ exports.registerAccount = (req, res) => {
         })
         .catch((err) => {
           console.log(err)
+          const error = new Error(
+            "Something went wrong while registering your account. Please try again."
+          )
+          return next(error)
         })
     })
   })
 }
 
 // render login page
-exports.getLoginPage = (req, res) => {
+exports.getLoginPage = (req, res, next) => {
   let errorMsg = req.flash("error") // assign "error" from flash
   if (errorMsg.length > 0) {
     errorMsg = errorMsg[0] // if error exist assign the message to errorMsg
@@ -88,7 +92,7 @@ exports.getLoginPage = (req, res) => {
 }
 
 // handle login
-exports.postLoginData = (req, res) => {
+exports.postLoginData = (req, res, next) => {
   const { email, password } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -126,20 +130,32 @@ exports.postLoginData = (req, res) => {
             oldFormData: { email, password },
           })
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err)
+          const error = new Error(
+            "Something went wrong while logging in your account. Please try again."
+          )
+          return next(error)
+        })
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error(
+        "Something went wrong while logging in your account. Please try again."
+      )
+      return next(error)
+    })
 }
 
 // handle logout
-exports.postLogoutData = (req, res) => {
+exports.postLogoutData = (req, res, next) => {
   req.session.destroy(() => {
     res.redirect("/")
   })
 }
 
 // render reset password page
-exports.getResetPage = (req, res) => {
+exports.getResetPage = (req, res, next) => {
   let errorMsg = req.flash("error")
   if (errorMsg.length > 0) {
     errorMsg = errorMsg[0]
@@ -154,12 +170,12 @@ exports.getResetPage = (req, res) => {
 }
 
 // render feedback page
-exports.getFeedbackPage = (req, res) => {
+exports.getFeedbackPage = (req, res, next) => {
   res.render("auth/feedback", { title: "Success" })
 }
 
 // send reset password link
-exports.resetPasswordLink = (req, res) => {
+exports.resetPasswordLink = (req, res, next) => {
   const { email } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -202,17 +218,25 @@ exports.resetPasswordLink = (req, res) => {
           },
           (err) => {
             console.log(err)
+            const error = new Error(
+              "Something went wrong with resetting your password for your account. Please try again."
+            )
+            return next(error)
           }
         )
       })
       .catch((err) => {
         console.log(err)
+        const error = new Error(
+          "Something went wrong with resetting your password for your account. Please try again."
+        )
+        return next(error)
       })
   })
 }
 
 // render new password page
-exports.getNewPasswordPage = (req, res) => {
+exports.getNewPasswordPage = (req, res, next) => {
   const { token } = req.params
   // check if the resetToken from db equals to the token from req.params
   // check if tokenExpiration is greater than the current date and time
@@ -233,10 +257,16 @@ exports.getNewPasswordPage = (req, res) => {
         oldFormData: { password: "", confirm_password: "" },
       })
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error(
+        "Something went wrong with resetting your password for your account. Please try again."
+      )
+      return next(error)
+    })
 }
 
-exports.changeNewPassword = (req, res) => {
+exports.changeNewPassword = (req, res, next) => {
   const { password, confirm_password, user_id, resetToken } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -271,5 +301,11 @@ exports.changeNewPassword = (req, res) => {
     .then(() => {
       return res.redirect("/login")
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error(
+        "Something went wrong with resetting your password for your account. Please try again."
+      )
+      return next(error)
+    })
 }

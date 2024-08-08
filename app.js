@@ -8,6 +8,7 @@ const mongoStore = require("connect-mongodb-session")(session)
 const { isLogin } = require("./middlewares/is-login")
 const csrf = require("csurf")
 const flash = require("connect-flash")
+const errorController = require("./controllers/error")
 
 const store = new mongoStore({
   uri: process.env.MONGODB_URI,
@@ -67,6 +68,9 @@ app.use((req, res, next) => {
 app.use("/admin", isLogin, adminRoutes)
 app.use(postRoutes)
 app.use(authRoutes)
+
+app.all("*", errorController.get404Page)
+app.use(errorController.get500Page)
 
 mongoose
   .connect(process.env.MONGODB_URL)

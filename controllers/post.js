@@ -2,7 +2,7 @@ const Post = require("../models/post")
 const { validationResult } = require("express-validator")
 const { formatISO9075 } = require("date-fns")
 
-exports.createPost = (req, res) => {
+exports.createPost = (req, res, next) => {
   const { title, description, photo } = req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -16,10 +16,14 @@ exports.createPost = (req, res) => {
     .then(() => {
       res.redirect("/")
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Can't create post")
+      return next(error)
+    })
 }
 
-exports.renderCreatePage = (req, res) => {
+exports.renderCreatePage = (req, res, next) => {
   res.render("createPost", {
     title: "Create Post",
     oldFormData: { title: "", description: "", photo: "" },
@@ -27,7 +31,7 @@ exports.renderCreatePage = (req, res) => {
   })
 }
 
-exports.renderHomePage = (req, res) => {
+exports.renderHomePage = (req, res, next) => {
   let loginSuccessful = req.flash("success") // get flash message with "success" key
   if (loginSuccessful.length > 0) {
     loginSuccessful = loginSuccessful[0] // if flash message exists, use the first one
@@ -49,11 +53,15 @@ exports.renderHomePage = (req, res) => {
           : "",
       })
     )
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Can't render Home Page")
+      return next(error)
+    })
 }
 
 // render details page of the post
-exports.getPost = (req, res) => {
+exports.getPost = (req, res, next) => {
   const postId = req.params.postId // get postId from params
   Post.findById(postId)
     .populate("userId", "email")
@@ -67,11 +75,15 @@ exports.getPost = (req, res) => {
           : "",
       })
     ) // pass in the whole post array
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Post not found")
+      return next(error)
+    })
 }
 
 // render the edit page for a specific post
-exports.getEditPost = (req, res) => {
+exports.getEditPost = (req, res, next) => {
   const postId = req.params.postId // get postId from params
   Post.findById(postId)
     .then((post) => {
@@ -86,11 +98,15 @@ exports.getEditPost = (req, res) => {
         isValidationFail: false,
       }) // else pass in the whole post array
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Can't render Edit Page")
+      return next(error)
+    })
 }
 
 // data to update a post
-exports.updatePost = (req, res) => {
+exports.updatePost = (req, res, next) => {
   const { title, description, photo, postId } = req.body // get all the data from req.body
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -117,15 +133,23 @@ exports.updatePost = (req, res) => {
         res.redirect("/") // redirect to homepage if successful
       })
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Can't update post")
+      return next(error)
+    })
 }
 
-exports.deletePost = (req, res) => {
+exports.deletePost = (req, res, next) => {
   const { postId } = req.params
   // delete the post if the _id(postId in db basically) from db is equal to postId from params && if the userId from db is equal to the current user
   Post.deleteOne({ _id: postId, userId: req.user._id })
     .then(() => {
       res.redirect("/")
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      const error = new Error("Can't delete post")
+      return next(error)
+    })
 }
