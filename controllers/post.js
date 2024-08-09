@@ -1,10 +1,24 @@
 const Post = require("../models/post")
+const deleteFile = require("../utils/deleteFile")
 const { validationResult } = require("express-validator")
 const { formatISO9075 } = require("date-fns")
+const pdf = require("pdf-creator-node")
+const fs = require("fs")
+const expressPath = require("path")
 
 exports.createPost = (req, res, next) => {
-  const { title, description, photo } = req.body
+  const { title, description } = req.body
+  const image = req.file
   const errors = validationResult(req)
+
+  if (image === undefined) {
+    return res.status(422).render("createPost", {
+      title: "Create Post",
+      errorMsg: "Image extension must be jpg, jpeg or png",
+      oldFormData: { title, description },
+    })
+  }
+
   if (!errors.isEmpty()) {
     return res.status(422).render("createPost", {
       title: "Create Post",
@@ -12,7 +26,7 @@ exports.createPost = (req, res, next) => {
       oldFormData: { title, description, photo },
     })
   }
-  Post.create({ title, description, imgUrl: photo, userId: req.user }) // create a new post with the given data
+  Post.create({ title, description, imgUrl: image.path, userId: req.user }) // create a new post with the given data
     .then(() => {
       res.redirect("/")
     })
@@ -107,14 +121,15 @@ exports.getEditPost = (req, res, next) => {
 
 // data to update a post
 exports.updatePost = (req, res, next) => {
-  const { title, description, photo, postId } = req.body // get all the data from req.body
+  const { title, description, postId } = req.body // get all the data from req.body
+  const image = req.file
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(422).render("editPost", {
       title,
       postId,
       errorMsg: errors.array()[0].msg,
-      oldFormData: { title, description, photo },
+      oldFormData: { title, description },
       isValidationFail: true,
     })
   }
@@ -127,7 +142,10 @@ exports.updatePost = (req, res, next) => {
       }
       post.title = title
       post.description = description
-      post.imgUrl = photo
+      if (image) {
+        deleteFile(post.imgUrl)
+        post.imgUrl = image.path
+      }
       // save the post
       return post.save().then(() => {
         res.redirect("/") // redirect to homepage if successful
@@ -143,7 +161,14 @@ exports.updatePost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   const { postId } = req.params
   // delete the post if the _id(postId in db basically) from db is equal to postId from params && if the userId from db is equal to the current user
-  Post.deleteOne({ _id: postId, userId: req.user._id })
+  Post.findById(postId)
+    .then((post) => {
+      if (!post) {
+        return res.redirect("/")
+      }
+      deleteFile(post.imgUrl)
+      return Post.deleteOne({ _id: postId, userId: req.user._id })
+    })
     .then(() => {
       res.redirect("/")
     })

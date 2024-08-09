@@ -13,7 +13,6 @@ router.post(
       .trim()
       .notEmpty()
       .withMessage("Title must have at least 1 character."),
-    body("photo").trim().isURL().withMessage("Image URL must be valid URL."),
     body("description")
       .trim()
       .notEmpty()
@@ -31,7 +30,6 @@ router.post(
       .trim()
       .notEmpty()
       .withMessage("Title must have at least 1 character."),
-    body("photo").trim().isURL().withMessage("Image URL must be valid URL."),
     body("description")
       .trim()
       .notEmpty()

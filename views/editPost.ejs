@@ -4,7 +4,12 @@
   <% if(errorMsg){ %>
   <p class="error-msg"><%= errorMsg %></p>
   <% } %>
-  <form action="/admin/edit-post" method="post">
+  <form
+    action="/admin/edit-post"
+    method="post"
+    enctype="multipart/form-data"
+    novalidate
+  >
     <input hidden value="<%= csrfToken %>" name="_csrf" />
     <input
       type="text"
@@ -24,13 +29,7 @@
     </div>
     <div>
       <label for="photo">Enter Photo</label>
-      <input
-        type="text"
-        id="photo"
-        name="photo"
-        value="<%= isValidationFail ? oldFormData.photo : post.imgUrl %>"
-        required
-      />
+      <input type="file" id="photo" name="photo" required />
     </div>
     <div>
       <label for="description">Enter description</label>
