@@ -2,36 +2,53 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-soerif;
 }
-.header {
-  text-align: center;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding: 0 80px;
+a {
+  display: block;
+  margin: 10px 0;
+  color: #fff;
+  background-color: #000;
+  padding: 8px 10px;
+  text-decoration: none;
+  font-size: 18px;
 }
-.header h1 {
-  font-size: 50px;
+button {
+  margin: 10px 0;
+  color: white;
+  background-color: black;
+  padding: 8px 10px;
+  width: fit-content;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
 }
-.header p {
-  font-size: 19px;
+.post-box a {
+  color: #000;
+  background-color: transparent;
+  padding: 0 0;
+  text-decoration: underline;
 }
-.login-div {
+nav {
+  width: 60%;
+  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  background-color: #000;
+  padding: 0 10px;
+}
+nav .right-side {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.header {
+  width: 90%;
+  margin: 0 auto;
 }
 .no-post-yet {
   padding-left: 80px;
-}
-.login-div a,
-.login-div button {
-  margin: 10px;
-}
-.login-div span {
-  font-size: 20px;
-  font-weight: bold;
 }
 .user-email {
   color: rgb(248, 170, 97);
@@ -49,7 +66,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 0 80px;
-  gap: 40px;
+  gap: 20px;
 }
 .post-box {
   flex: 1;
@@ -60,7 +77,8 @@
   font-weight: 600;
 }
 .post-desc {
-  font-size: 18px;
+  font-size: 17px;
+  margin-bottom: 8px;
 }
 .post-email {
   font-size: 21px;
@@ -69,7 +87,8 @@
 }
 .post-img {
   width: 100%;
-  height: auto;
+  height: 15rem;
+  object-fit: cover;
   margin-top: 10px;
 }
 .details {
@@ -77,13 +96,14 @@
   margin: auto;
   padding: 20px 0;
 }
-.details h1 {
+.details .title {
   font-size: 44px;
-  margin-bottom: 40px;
+  padding: 0;
+  margin: 10px 0;
 }
 .details img {
   width: 100%;
-  height: 30rem;
+  height: 40rem;
   object-fit: cover;
   margin-bottom: 20px;
 }
@@ -96,7 +116,7 @@
   font-size: 19px;
   font-weight: 500;
 }
-a {
+/* a {
   display: block;
   margin: 10px 0;
   color: white;
@@ -105,7 +125,7 @@ a {
   width: fit-content;
   text-decoration: none;
   font-size: 18px;
-}
+} */
 label {
   display: block;
   font-size: 16px;
@@ -116,16 +136,6 @@ textarea {
   font-size: 18px;
   padding: 4px 10px;
   width: 100%;
-}
-button {
-  margin: 10px 0;
-  color: white;
-  background-color: black;
-  padding: 10px;
-  width: 100%;
-  width: fit-content;
-  border: none;
-  font-size: 18px;
 }
 .mx-auto {
   width: 40%;

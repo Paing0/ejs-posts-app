@@ -3,7 +3,7 @@ const deleteFile = require("../utils/deleteFile")
 const { validationResult } = require("express-validator")
 const { formatISO9075 } = require("date-fns")
 
-const POST_PER_PAGE = 3
+const POST_PER_PAGE = 6
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body

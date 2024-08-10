@@ -5,5 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
     <link rel="stylesheet" href="/css/style.css" />
+    <body>
+      <nav>
+        <h1><a href="/">Ejs Blog</a></h1>
+        <div class="right-side">
+          <% if(isLogin) { %>
+
+          <a href="/admin/create-post">Create post</a>
+          <a href="/admin/view-profile">Profile</a>
+          <form action="/logout" method="post">
+            <input hidden value="<%= csrfToken %>" name="_csrf" />
+            <button>Logout</button>
+          </form>
+          <% } else { %>
+          <a href="/login">Login to existing account</a>
+          <a href="/register">Create a new account</a>
+          <% } %>
+        </div>
+      </nav>
+    </body>
   </head>
-  <body>
+</html>

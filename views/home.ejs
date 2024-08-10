@@ -2,82 +2,59 @@
 <p class="success-msg"><%= loginSuccessful %></p>
 <% } %>
 <section class="header">
-  <h1 class="title">EJS Blog</h1>
-  <p>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nulla id
-    similique vero! Repellat animi aliquid corporis ad. Tenetur hic voluptatum
-    labore! Officiis ea quis eos quas saepe, veniam at. Lorem ipsum, dolor sit
-    amet consectetur adipisicing elit. Eveniet voluptas minima tempore maiores
-    ipsum at animi sapiente similique ex illo odio vitae nulla suscipit, rerum
-    minus illum quae fuga natus. Lorem ipsum dolor sit amet consectetur,
-    adipisicing elit. Officiis libero omnis, a mollitia doloremque, quam hic
-    doloribus sint vitae magnam eum numquam eaque voluptates quasi aliquam
-    impedit asperiores, dolor eos!
-  </p>
+  <div>
+    <h1 class="title">Recent posts</h1>
+    <% if (postsArr.length === 0 && isLogin) { %>
+    <div class="no-post-yet">
+      <h3>No post yet.</h3>
+      <a href="/admin/create-post">Create a new post</a>
+    </div>
+    <% } %>
+  </div>
+  <div class="post-container">
+    <% for(let post of postsArr) { %>
+    <div class="post-box">
+      <a class="img-a" href="/post/<%= post._id %>">
+        <img
+          class="post-img"
+          src="<%= post.imgUrl %>"
+          alt="<%= post.title %>"
+        />
+      </a>
+      <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
+      <p class="post-email">Posted by: <%= post.userId.email %></p>
+      <p class="post-desc">
+        <%= post.description.substr(0, 80) %><% if(post.description.length >
+        80){ %>...<% } %>
+      </p>
+      <a class="btn" href="/post/<%= post._id %>">See More...</a>
+    </div>
+    <% } %>
+  </div>
+  <hr />
+  <div class="wrapper">
+    <% if(currentPage == 1 && !hasNextPage){ %>
+    <a href="/?page=2">Next</a>
+    <% } %>
+    <!-- previous  -->
+    <% if(hasPreviousPage){ %>
+    <a href="/?page=<%= previousPage %>">Previous Page (<%= previousPage %>)</a>
+    <% } %>
+    <!-- next -->
+    <% if(hasNextPage){ %>
+    <a class="mg-left" href="/?page=<%= nextPage %>"
+      >Next Page <%= nextPage %></a
+    >
+    <% } %>
+  </div>
+  <%- include("./includes/foot") %>
+  <script>
+    //  remove msg after 3sec
+    setTimeout(() => {
+      const successMsg = document.querySelector(".success-msg")
+      if (successMsg) {
+        successMsg.remove()
+      }
+    }, 3000)
+  </script>
 </section>
-<% if(isLogin) { %>
-<div class="login-div">
-  <a href="/admin/create-post"
-    >Add a new post as
-    <span class="user-email">
-      <%= currentUserEmail? currentUserEmail : "" %>
-    </span>
-  </a>
-  <span>or</span>
-  <form action="/logout" method="post">
-    <input hidden value="<%= csrfToken %>" name="_csrf" />
-    <button href="/logout">Logout</button>
-  </form>
-</div>
-<% } else { %>
-<div class="login-div">
-  <a href="/login">Login to an existing account</a>
-  <span>or</span>
-  <a href="/register">Create a new account</a>
-</div>
-<% } %>
-<hr />
-<div>
-  <h1 class="title">Recent posts</h1>
-  <% if (postsArr.length === 0 && isLogin) { %>
-  <div class="no-post-yet">
-    <h3>No post yet.</h3>
-    <a href="/admin/create-post">Create a new post</a>
-  </div>
-  <% } %>
-</div>
-<div class="post-container">
-  <% for(let post of postsArr) { %>
-  <div class="post-box">
-    <h3 class="post-title"><%= post.title %></h3>
-    <p class="post-email">Posted by: <%= post.userId.email %></p>
-    <img class="post-img" src="<%= post.imgUrl %>" alt="<%= post.title %>" />
-    <p class="post-desc"><%= post.description.substr(0, 200) %></p>
-    <a class="btn" href="/post/<%= post._id %>">See More...</a>
-  </div>
-  <% } %>
-</div>
-<hr />
-<div class="wrapper">
-  <% if(currentPage == 1 && !hasNextPage){ %>
-  <a href="/?page=2">Next</a>
-  <% } %>
-  <!-- previous  -->
-  <% if(hasPreviousPage){ %>
-  <a href="/?page=<%= previousPage %>">Page <%= previousPage %> </a>
-  <% } %>
-  <!-- next -->
-  <% if(hasNextPage){ %>
-  <a class="mg-left" href="/?page=<%= nextPage %>">Page <%= nextPage %></a>
-  <% } %>
-</div>
-<%- include("./includes/foot") %>
-<!-- remove msg after 3sec -->
-<script>
-  setTimeout(() => {
-    const successMsg = document.querySelector(".success-msg")
-    if (successMsg) {
-      successMsg.remove()
-    }
-  }, 3000)
-</script>
