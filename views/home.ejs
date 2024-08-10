@@ -57,6 +57,20 @@
   </div>
   <% } %>
 </div>
+<hr />
+<div class="wrapper">
+  <% if(currentPage == 1 && !hasNextPage){ %>
+  <a href="/?page=2">Next</a>
+  <% } %>
+  <!-- previous  -->
+  <% if(hasPreviousPage){ %>
+  <a href="/?page=<%= previousPage %>">Page <%= previousPage %> </a>
+  <% } %>
+  <!-- next -->
+  <% if(hasNextPage){ %>
+  <a class="mg-left" href="/?page=<%= nextPage %>">Page <%= nextPage %></a>
+  <% } %>
+</div>
 <%- include("./includes/foot") %>
 <!-- remove msg after 3sec -->
 <script>

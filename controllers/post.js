@@ -2,9 +2,8 @@ const Post = require("../models/post")
 const deleteFile = require("../utils/deleteFile")
 const { validationResult } = require("express-validator")
 const { formatISO9075 } = require("date-fns")
-const pdf = require("pdf-creator-node")
-const fs = require("fs")
-const expressPath = require("path")
+
+const POST_PER_PAGE = 3
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body
@@ -46,27 +45,49 @@ exports.renderCreatePage = (req, res, next) => {
 }
 
 exports.renderHomePage = (req, res, next) => {
+  const pageNumber = +req.query.page || 1
+  let totalPostCount
+
   let loginSuccessful = req.flash("success") // get flash message with "success" key
   if (loginSuccessful.length > 0) {
     loginSuccessful = loginSuccessful[0] // if flash message exists, use the first one
   } else {
     loginSuccessful = null //else
   }
-  Post.find() // find all posts
-    .select("title description imgUrl") // select the fields
-    .populate("userId", "email") // populate the userId field with the email from the User model
-    .sort({ title: 1 }) // sort posts by title in ascending order
-    .then((posts) =>
-      res.render("home", {
-        // render the home page
-        title: "Home",
-        postsArr: posts, // pass the arrays as posts
-        loginSuccessful, // pass the loginSuccessful message
-        currentUserEmail: req.session.userInfo // pass the current user's email if logged in
-          ? req.session.userInfo.email
-          : "",
-      })
-    )
+  Post.find()
+    .countDocuments()
+    .then((totalPost) => {
+      totalPostCount = totalPost
+      return Post.find() // find all posts
+        .select("title description imgUrl") // select the fields
+        .populate("userId", "email")
+        .skip((pageNumber - 1) * POST_PER_PAGE)
+        .limit(POST_PER_PAGE) // populate the userId field with the email from the User model
+        .sort({ createdAt: -1 }) // sort posts by title in ascending order
+    })
+    .then((posts) => {
+      if (posts.length > 0) {
+        return res.render("home", {
+          // render the home page
+          title: "Home",
+          postsArr: posts, // pass the arrays as posts
+          loginSuccessful, // pass the loginSuccessful message
+          currentUserEmail: req.session.userInfo // pass the current user's email if logged in
+            ? req.session.userInfo.email
+            : "",
+          currentPage: pageNumber,
+          hasNextPage: POST_PER_PAGE * pageNumber < totalPostCount,
+          hasPreviousPage: pageNumber > 1,
+          nextPage: pageNumber + 1,
+          previousPage: pageNumber - 1,
+        })
+      } else {
+        return res.status(500).render("error/500", {
+          title: "500, Something went wrong",
+          message: "No post in this page",
+        })
+      }
+    })
     .catch((err) => {
       console.log(err)
       const error = new Error("Can't render Home Page")
