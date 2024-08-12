@@ -3,7 +3,7 @@
 <% } %>
 <section class="header">
   <div>
-    <h1 class="title">Recent posts</h1>
+    <h1 class="pl-80 title">Recent posts</h1>
     <% if (postsArr.length === 0 && isLogin) { %>
     <div class="no-post-yet">
       <h3>No post yet.</h3>
@@ -14,28 +14,20 @@
   <div class="post-container">
     <% for(let post of postsArr) { %>
     <div class="post-box">
-      <a class="img-a" href="/post/<%= post._id %>">
-        <img
-          class="post-img"
-          src="<%= post.imgUrl %>"
-          alt="<%= post.title %>"
-        />
-      </a>
+      <img class="post-img" src="<%= "/" + post.imgUrl %>" alt="<%= post.title
+      %>" />
       <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
       <p class="post-email">Posted by: <%= post.userId.email %></p>
       <p class="post-desc">
         <%= post.description.substr(0, 80) %><% if(post.description.length >
         80){ %>...<% } %>
       </p>
-      <a class="btn" href="/post/<%= post._id %>">See More...</a>
+      <a class="post-see-more" href="/post/<%= post._id %>">See More...</a>
     </div>
     <% } %>
   </div>
   <hr />
-  <div class="wrapper">
-    <% if(currentPage == 1 && !hasNextPage){ %>
-    <a href="/?page=2">Next</a>
-    <% } %>
+  <div class="pagination">
     <!-- previous  -->
     <% if(hasPreviousPage){ %>
     <a href="/?page=<%= previousPage %>">Previous Page (<%= previousPage %>)</a>
@@ -43,18 +35,18 @@
     <!-- next -->
     <% if(hasNextPage){ %>
     <a class="mg-left" href="/?page=<%= nextPage %>"
-      >Next Page <%= nextPage %></a
+      >Next Page (<%= nextPage %>)</a
     >
     <% } %>
   </div>
-  <%- include("./includes/foot") %>
-  <script>
-    //  remove msg after 3sec
-    setTimeout(() => {
-      const successMsg = document.querySelector(".success-msg")
-      if (successMsg) {
-        successMsg.remove()
-      }
-    }, 3000)
-  </script>
 </section>
+<%- include("./includes/foot") %>
+<script>
+  // remove msg after 3sec
+  setTimeout(() => {
+    const successMsg = document.querySelector(".success-msg")
+    if (successMsg) {
+      successMsg.remove()
+    }
+  }, 3000)
+</script>

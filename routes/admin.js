@@ -2,6 +2,7 @@ const express = require("express")
 
 const router = express.Router()
 const postController = require("../controllers/post")
+const userController = require("../controllers/user")
 const { body } = require("express-validator")
 
 router.get("/create-post", postController.renderCreatePage)
@@ -39,5 +40,7 @@ router.post(
 )
 
 router.post("/delete/:postId", postController.deletePost)
+
+router.get("/profile", userController.getProfile)
 
 module.exports = router

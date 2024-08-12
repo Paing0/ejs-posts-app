@@ -12,7 +12,7 @@
           <% if(isLogin) { %>
 
           <a href="/admin/create-post">Create post</a>
-          <a href="/admin/view-profile">Profile</a>
+          <a href="/admin/profile">Profile</a>
           <form action="/logout" method="post">
             <input hidden value="<%= csrfToken %>" name="_csrf" />
             <button>Logout</button>

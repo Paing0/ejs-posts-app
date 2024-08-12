@@ -1,0 +1,38 @@
+<%- include("../includes/head") %>
+<section class="profile">
+  <h1 class="pl-80 title">Post by <%= currentUserEmail %></h1>
+  <div class="post-container">
+    <% for(let post of postsArr) { %>
+    <div class="post-box">
+      <img
+        class="post-img"
+        src="<%= '/' + post.imgUrl %>"
+        alt="<%= post.title %>"
+      />
+      <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
+      <p class="post-email">Posted by: <%= post.userId.email %></p>
+      <p class="post-desc">
+        <%= post.description.substr(0, 80) %><% if(post.description.length >
+        80){ %>...<% } %>
+      </p>
+      <a class="post-see-more" href="/post/<%= post._id %>">See More...</a>
+    </div>
+    <% } %>
+  </div>
+  <hr />
+  <div class="pagination">
+    <!-- previous  -->
+    <% if(hasPreviousPage){ %>
+    <a href="/admin/profile?page=<%= previousPage %>"
+      >Previous Page (<%= previousPage %>)</a
+    >
+    <% } %>
+    <!-- next -->
+    <% if(hasNextPage){ %>
+    <a class="mg-left" href="/admin/profile?page=<%= nextPage %>"
+      >Next Page (<%= nextPage %>)</a
+    >
+    <% } %>
+  </div>
+</section>
+<%- include("../includes/foot") %>
