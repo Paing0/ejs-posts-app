@@ -1,6 +1,7 @@
-<%- include("./includes/head") %> <% if(loginSuccessful){ %>
+<%- include("./includes/head") %> <% if (loginSuccessful) { %>
 <p class="success-msg"><%= loginSuccessful %></p>
 <% } %>
+
 <section class="header">
   <div>
     <h1 class="pl-80 title">Recent posts</h1>
@@ -11,38 +12,58 @@
     </div>
     <% } %>
   </div>
+
   <div class="post-container">
-    <% for(let post of postsArr) { %>
+    <% for (let post of postsArr) { %>
     <div class="post-box">
-      <img class="post-img" src="<%= "/" + post.imgUrl %>" alt="<%= post.title
-      %>" />
+      <img
+        class="post-img"
+        src="<%= '/' + post.imgUrl %>"
+        alt="<%= post.title %>"
+      />
       <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
-      <p class="post-email">Posted by: <%= post.userId.email %></p>
+
+      <% if (post.userId._id.toString() == currentUserId.toString()) { %>
+      <span class="post-email">Posted by: </span>
+      <a class="post-email" href="/admin/profile"><%= post.userId.email %></a>
+      <% } else { %>
+      <span class="post-email">Posted by: </span>
+      <a class="post-email" href="/profile/<%= post.userId._id %>"
+        ><%= post.userId.email %></a
+      >
+      <% } %>
+
+      <hr />
       <p class="post-desc">
-        <%= post.description.substr(0, 80) %><% if(post.description.length >
-        80){ %>...<% } %>
+        <%= post.description.substr(0, 80) %><% if (post.description.length >
+        80) { %>...<% } %>
       </p>
       <a class="post-see-more" href="/post/<%= post._id %>">See More...</a>
     </div>
     <% } %>
   </div>
+
   <hr />
+
   <div class="pagination">
-    <!-- previous  -->
-    <% if(hasPreviousPage){ %>
+    <!-- previous -->
+    <% if (hasPreviousPage) { %>
     <a href="/?page=<%= previousPage %>">Previous Page (<%= previousPage %>)</a>
     <% } %>
+
     <!-- next -->
-    <% if(hasNextPage){ %>
-    <a class="mg-left" href="/?page=<%= nextPage %>"
+    <% if (hasNextPage) { %>
+    <a class="ml-10" href="/?page=<%= nextPage %>"
       >Next Page (<%= nextPage %>)</a
     >
     <% } %>
   </div>
 </section>
+
 <%- include("./includes/foot") %>
+
 <script>
-  // remove msg after 3sec
+  // Remove success message after 3 seconds
   setTimeout(() => {
     const successMsg = document.querySelector(".success-msg")
     if (successMsg) {

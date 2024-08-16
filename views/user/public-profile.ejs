@@ -1,16 +1,6 @@
 <%- include("../includes/head") %>
 <section class="profile">
-  <div class="user-profile">
-    <h1 class="pl-80 title"><%= currentUserEmail %></h1>
-    <div>
-      <a class="right ml-10" href="/admin/premium">Buy premium</a>
-      <a class="right" href="/admin/username">Set username</a>
-    </div>
-  </div>
-  <p class="profile-username">
-    Username - <%= postsArr[0].userId.username ? postsArr[0].userId.username: ""
-    %>
-  </p>
+  <h1 class="pl-80 title"><%= currentUserEmail %></h1>
   <div class="post-container">
     <% for(let post of postsArr) { %>
     <div class="post-box">
@@ -20,7 +10,7 @@
         alt="<%= post.title %>"
       />
       <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
-      <p class="post-email">Posted by:</p>
+      <p class="post-email">Posted by: <%= post.userId.email %></p>
       <hr />
       <p class="post-desc">
         <%= post.description.substr(0, 80) %><% if(post.description.length >
@@ -34,14 +24,14 @@
   <div class="pagination">
     <!-- previous  -->
     <% if(hasPreviousPage){ %>
-    <a href="/admin/profile?page=<%= previousPage %>"
-      >Previous Page (<%= previousPage %>)</a
+    <a href="/profile/<%= postsArr[0].userId._id %>?page=<%= previousPage%>"
+      >Previous Page (<%= previousPage%>)</a
     >
     <% } %>
     <!-- next -->
     <% if(hasNextPage){ %>
-    <a class="ml-10" href="/admin/profile?page=<%= nextPage %>"
-      >Next Page (<%= nextPage %>)</a
+    <a href="/profile/<%= postsArr[0].userId._id %>?page=<%= nextPage%>"
+      >Next Page (<%= nextPage%>)</a
     >
     <% } %>
   </div>

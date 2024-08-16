@@ -43,4 +43,16 @@ router.post("/delete/:postId", postController.deletePost)
 
 router.get("/profile", userController.getProfile)
 
+router.get("/username", userController.renderUsernamePage)
+
+router.post(
+  "/setusername",
+  body("username")
+    .isLength({ min: 3 })
+    .withMessage("Username must be at least 3 characters."),
+  userController.setUsername
+)
+
+router.get("/premium", userController.renderPremiumPage)
+
 module.exports = router
