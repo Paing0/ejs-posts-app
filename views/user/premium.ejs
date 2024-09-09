@@ -1,13 +1,24 @@
 <%- include("../includes/head") %>
 <section class="premium">
   <div class="card">
-    <h3>Premium</h3>
+    <h3>Premium $100</h3>
     <ul>
-      <li>Can save post as PDF file</li>
-      <li>Animate profile badge</li>
-      <li>Can set username unlimited</li>
+      <li>Animated profile badge</li>
+      <li>(Yep, only this)</li>
     </ul>
-    <button>Buy premium</button>
+    <div class="center">
+      <button class="checkout-btn">Buy premium</button>
+    </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+      const stripe = Stripe(
+        "pk_test_51PtmzfRokKv1kKIm9fK9X4e1SPnBCbHwjfUCtPZmhGmeYw76G4FHFEBjHAbccCCORGolvEw9eYzPPbNhwp2lHeug006IXuMeep"
+      )
+      const checkoutBtn = document.querySelector(".checkout-btn")
+      checkoutBtn.addEventListener("click", () => {
+        stripe.redirectToCheckout({ sessionId: "<%=  session_id %>" })
+      })
+    </script>
   </div>
 </section>
 <%- include("../includes/foot") %>

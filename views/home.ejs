@@ -23,22 +23,55 @@
       />
       <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
 
-      <% if (post.userId._id.toString() == currentUserId.toString()) { %>
-      <span class="post-email">Posted by: </span>
-      <a class="post-email" href="/admin/profile"><%= post.userId.email %></a>
-      <% } else { %>
-      <span class="post-email">Posted by: </span>
-      <a class="post-email" href="/profile/<%= post.userId._id %>"
-        ><%= post.userId.email %></a
-      >
-      <% } %>
-
-      <hr />
       <p class="post-desc">
-        <%= post.description.substr(0, 80) %><% if (post.description.length >
+        <%= post.description.substr(0, 100) %><% if (post.description.length >
         80) { %>...<% } %>
       </p>
-      <a class="post-see-more" href="/post/<%= post._id %>">See More...</a>
+      <hr />
+
+      <div class="flex-center">
+        <% if (post.userId._id.toString() == currentUserId.toString()) { %>
+        <a href="/admin/profile">
+          <span
+            class="material-symbols-outlined material-account-circle-f4 icon-down-7 ml--10"
+          >
+            account_circle
+          </span>
+        </a>
+        <% } else { %>
+        <a href="/profile/<%= post.userId._id %>">
+          <span
+            class="material-symbols-outlined material-account-circle-f4 icon-down-7 ml--10"
+          >
+            account_circle
+          </span>
+        </a>
+
+        <% } %>
+        <div>
+          <% if(post.userId.isPremium && !post.userId.username){ %>
+          <p class="post-email">
+            <%= post.userId.email %>
+            <span
+              class="material-symbols-outlined icon-down-5 animate__animated animate__heartBeat animate__infinite infinite secondary-color"
+              >star
+            </span>
+          </p>
+          <% } else{ %>
+          <p class="post-email"><%= post.userId.email %></p>
+          <% } %> <% if(post.userId.isPremium && post.userId.username){%>
+          <p class="post-email">
+            <%= post.userId.username %>
+            <span
+              class="material-symbols-outlined icon-down-5 animate__animated animate__heartBeat animate__infinite infinite secondary-color"
+              >star
+            </span>
+          </p>
+          <%}else{%>
+          <p class="post-email"><%= post.userId.username %></p>
+          <%}%>
+        </div>
+      </div>
     </div>
     <% } %>
   </div>

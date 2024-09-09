@@ -60,7 +60,7 @@ exports.renderHomePage = (req, res, next) => {
       totalPostCount = totalPost
       return Post.find() // find all posts
         .select("title description imgUrl") // select the fields
-        .populate("userId", "email")
+        .populate("userId", "email isPremium username")
         .skip((pageNumber - 1) * POST_PER_PAGE)
         .limit(POST_PER_PAGE) // populate the userId field with the email from the User model
         .sort({ createdAt: -1 }) // sort posts by title in ascending order

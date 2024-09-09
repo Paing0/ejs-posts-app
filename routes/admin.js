@@ -55,4 +55,10 @@ router.post(
 
 router.get("/premium", userController.renderPremiumPage)
 
+router.get("/subscription-success", userController.getSuccessPage)
+
+router.get("/subscription-cancel", userController.renderPremiumPage)
+
+router.get("/premium-details", userController.getPremiumDetails)
+
 module.exports = router

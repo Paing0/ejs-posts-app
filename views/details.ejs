@@ -1,8 +1,14 @@
 <%- include("./includes/head") %>
 <section class="details">
   <h1 class="title"><%= post.title %></h1>
-  <p class="details-email">Post by - <%= post.userId.email %></p>
-  <p class="details-timestamps">Uploaded at - <%= date %></p>
+  <p class="details-email">
+    <span class="material-symbols-outlined icon-down-5"> person </span>
+    <%= post.userId.email %>
+  </p>
+  <p class="details-timestamps">
+    <span class="material-symbols-outlined icon-down-5"> schedule </span>
+    <%= date %>
+  </p>
   <img src="<%= "/" + post.imgUrl %>" alt="<%= post.title %>" />
   <p class="desc"><%= post.description %></p>
   <a href="/" class="inline-block">Go back home</a>
@@ -16,7 +22,7 @@
     <input hidden value="<%= csrfToken %>" name="_csrf" />
     <button>Delete</button>
   </form>
-  <a class="inline-block mr-2 right" href="/admin/edit/<%= post._id %>"
+  <a class="inline-block mr-8 right" href="/admin/edit/<%= post._id %>"
     >Edit
   </a>
   <% } %>

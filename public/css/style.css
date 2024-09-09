@@ -1,22 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
+
 :root {
   --primary-color: #554242;
   --secondary-color: #b88950;
 }
+
 label {
   color: var(--primary-color);
   font-weight: 500;
 }
+
 input {
   color: var(--primary-color);
   outline: var(--primary-color);
   border: 1px solid var(--primary-color);
 }
+
 a {
   display: block;
   margin: 10px 0;
@@ -28,6 +33,7 @@ a {
   font-size: 18px;
   font-weight: 500;
 }
+
 button {
   margin: 10px 0;
   color: white;
@@ -39,6 +45,7 @@ button {
   cursor: pointer;
   font-weight: 500;
 }
+
 nav {
   width: 60%;
   margin: 0 auto;
@@ -48,117 +55,157 @@ nav {
   background-color: var(--primary-color);
   padding: 0 10px;
 }
+
 nav a,
 nav button {
   margin: 8px 0;
   font-weight: 500;
 }
+
 nav h1 a {
   font-weight: bold;
 }
+
 nav .right-side {
   display: flex;
   align-items: center;
   gap: 6px;
 }
+
 .header,
 .profile {
   width: 90%;
   margin: 0 auto;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.email-username {
+  color: var(--secondary-color);
+}
+
 .user-profile {
+  margin: 40px 0 20px 0;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
 }
-.user-profile a {
-  text-align: center;
-  margin-top: 0;
-  margin-bottom: 25px;
-}
-.profile-username {
+
+.profile-username,
+.profile-email {
   color: var(--secondary-color);
-  font-size: 20px;
+  font-size: 18px;
+  font-weight: 600;
   padding-left: 80px;
   margin-bottom: 10px;
 }
+
+.icon-down-5 {
+  position: relative;
+  top: 5px;
+}
+
+.icon-down-7 {
+  position: relative;
+  top: 7px;
+}
+
+.username-premium {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.username-premium-btns {
+  text-align: center;
+  margin-bottom: 0px;
+}
+
 .no-post-yet {
   padding-left: 80px;
 }
+
 .user-email {
   color: rgb(248, 170, 97);
 }
+
 .title {
   font-size: 40px;
   margin-top: 20px;
   margin-bottom: 20px;
   color: var(--secondary-color);
 }
-.pl-80 {
-  padding-left: 80px;
-}
+
 .post-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 0 80px;
   gap: 20px;
 }
+
 .post-box {
   flex: 1;
 }
-.post-see-more {
-  font-weight: 500;
-  color: var(--secondary-color) !important;
-  text-decoration: underline;
-}
+
 .post-box a {
   color: var(--primary-color);
   background-color: transparent;
   padding: 0 0;
 }
+
 .post-title {
   font-size: 35px;
   color: var(--secondary-color) !important;
   font-weight: 600;
 }
+
 .post-desc {
   color: var(--primary-color);
   font-size: 17px;
   margin: 8px 0;
 }
+
 .post-email {
-  display: inline-block;
   color: var(--primary-color);
-  font-size: 18.5px;
-  margin: 10px 0;
+  font-size: 18px;
+  margin: 5px 0;
   font-weight: 600;
 }
+
 .post-img {
   width: 100%;
   height: 15rem;
   object-fit: cover;
   margin-top: 10px;
 }
+
 .details {
   width: 60%;
   margin: auto;
   padding: 20px 0;
 }
+
 .details .title {
   font-size: 44px;
   padding: 0;
   margin: 10px 0;
 }
+
 .details img {
   width: 100%;
   height: 40rem;
   object-fit: cover;
   margin-bottom: 20px;
 }
+
 .details .desc {
   font-size: 20px;
   color: var(--primary-color);
 }
+
 .details-email,
 .details-timestamps {
   color: var(--primary-color);
@@ -166,33 +213,33 @@ nav .right-side {
   font-size: 19px;
   font-weight: 500;
 }
+
 label {
   display: block;
   font-size: 16px;
   margin-top: 10px;
 }
+
 input,
 textarea {
   font-size: 18px;
   padding: 4px 10px;
   width: 100%;
 }
+
 .mx-auto {
   width: 40%;
   margin: auto;
 }
-.mr-2 {
-  margin-right: 8px;
-}
+
 .right {
   float: right;
 }
+
 .inline-block {
   display: inline-block;
 }
-.ml-2 {
-  margin-left: 8px;
-}
+
 .error-msg {
   width: 100%;
   text-align: center;
@@ -201,6 +248,7 @@ textarea {
   background-color: rgb(255, 184, 184);
   padding: 4px 10px;
 }
+
 .warn-msg {
   width: 100%;
   text-align: center;
@@ -208,6 +256,7 @@ textarea {
   background-color: rgb(255, 255, 193);
   padding: 4px 10px;
 }
+
 .success-msg {
   margin: 10px auto 0;
   width: 30%;
@@ -219,21 +268,15 @@ textarea {
   padding: 4px 10px;
 }
 
-.mt-0 {
-  margin-top: 0;
-}
-
 /* pagination */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .pagination a {
   font-weight: 500;
-}
-.ml-10 {
-  margin-left: 10px;
 }
 
 /* premium */
@@ -245,20 +288,28 @@ textarea {
   justify-content: center;
   height: 90vh;
 }
+
 .card {
   padding: 20px 20px;
   border: 2px solid var(--primary-color);
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .card h3 {
   color: var(--secondary-color);
   font-size: 32px;
   text-align: center;
   margin-bottom: 10px;
 }
+
 .card ul li {
   color: var(--primary-color);
 }
+
 .card button {
   background-color: var(--primary-color);
   color: #fff;
@@ -269,8 +320,94 @@ textarea {
   font-size: 18px;
   text-align: center;
 }
+
 .card ul li {
   list-style: none;
   margin-bottom: 10px;
   font-size: 18px;
+}
+
+/* payment details start */
+.payment-details {
+  width: 60%;
+  margin: 0 auto;
+}
+.p-details h1 {
+  font-size: 3rem;
+}
+.p-details span {
+  font-weight: bold;
+}
+.p-details .status {
+  background-color: green;
+  color: #fff;
+  padding: 1px 3px 1px 3px;
+}
+/* payment details end */
+
+/* subscription success start */
+.s-success {
+  text-align: center;
+}
+
+.s-success h1 {
+  color: var(--secondary-color);
+  margin-top: 10px;
+  font-size: 3rem;
+}
+
+/* subscription success end */
+
+/* Material icons */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.material-account-circle-f6 {
+  font-size: 6rem;
+  color: var(--primary-color);
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24;
+}
+
+.material-account-circle-f4 {
+  font-size: 4rem;
+  color: var(--primary-color);
+  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+}
+
+/* color */
+.secondary-color {
+  color: var(--secondary-color);
+}
+
+/* paddings and margins */
+.pt-5 {
+  padding-top: -59px;
+}
+
+.pl-80 {
+  padding-left: 80px;
+}
+
+.ml-10 {
+  margin-left: 10px;
+}
+
+.mr-8 {
+  margin-right: 8px;
+}
+
+.mt-0 {
+  margin-top: 0;
+}
+
+.ml--10 {
+  margin-left: -10px;
+}
+
+/* flex-center */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

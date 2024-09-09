@@ -1,6 +1,23 @@
 <%- include("../includes/head") %>
 <section class="profile">
-  <h1 class="pl-80 title"><%= currentUserEmail %></h1>
+  <div>
+    <span class="material-symbols-outlined material-account-circle-f6 pl-80">
+      account_circle
+    </span>
+    <p class="profile-email"><%= currentUserEmail %></p>
+    <p
+      class="profile-username <%= postsArr[0].userId.username ? 'premium-username' : '' %>"
+    >
+      <% if (postsArr[0].userId.username) { %> <%= postsArr[0].userId.username
+      %> <% if(postsArr[0].userId.isPremium){ %>
+      <span
+        class="material-symbols-outlined icon-down-5 animate__animated animate__heartBeat animate__infinite infinite"
+      >
+        star
+      </span>
+      <% } %> <% } %>
+    </p>
+  </div>
   <div class="post-container">
     <% for(let post of postsArr) { %>
     <div class="post-box">
@@ -10,13 +27,11 @@
         alt="<%= post.title %>"
       />
       <a href="/post/<%= post._id %>" class="post-title"><%= post.title %></a>
-      <p class="post-email">Posted by: <%= post.userId.email %></p>
       <hr />
       <p class="post-desc">
-        <%= post.description.substr(0, 80) %><% if(post.description.length >
+        <%= post.description.substr(0, 100) %><% if(post.description.length >
         80){ %>...<% } %>
       </p>
-      <a class="post-see-more" href="/post/<%= post._id %>">See More...</a>
     </div>
     <% } %>
   </div>
