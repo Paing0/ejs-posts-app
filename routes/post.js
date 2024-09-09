@@ -4,8 +4,6 @@ const postController = require("../controllers/post")
 const userController = require("../controllers/user")
 const router = express.Router()
 
-const { isPremium } = require("../middlewares/is-premium")
-
 router.get("/", postController.renderHomePage)
 
 router.get("/post/:postId", postController.getPost)
