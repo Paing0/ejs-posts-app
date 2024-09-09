@@ -112,15 +112,9 @@ nav .right-side {
   top: 7px;
 }
 
-.username-premium {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.username-premium-btns {
+.username-pfp-premium-btns {
   text-align: center;
+  width: 100%;
   margin-bottom: 0px;
 }
 

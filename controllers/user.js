@@ -110,7 +110,6 @@ exports.setUsername = (req, res, next) => {
 
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    console.log(username)
     return res.status(422).render("user/username", {
       title: "Reset Password",
       errorMsg: errors.array()[0].msg,

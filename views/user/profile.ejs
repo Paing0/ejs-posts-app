@@ -20,12 +20,18 @@
       </p>
     </div>
     <div class="username-premium-btns">
-      <a class="right ml-10" href="/admin/username">Set username</a>
+      <a class="username-pfp-premium-btns" href="/admin/username"
+        >Set username</a
+      >
       <% if(postsArr[0].userId.isPremium){ %>
-      <a href="/admin/premium-image">Set profile picture</a>
-      <a class="right" href="/admin/premium-details">Check premium status</a>
+      <a class="username-pfp-premium-btns" href="/admin/premium-image"
+        >Set profile picture</a
+      >
+      <a class="username-pfp-premium-btns" href="/admin/premium-details"
+        >Check premium status</a
+      >
       <% } else{%>
-      <a class="right" href="/admin/premium">Buy premium</a>
+      <a class="username-pfp-premium-btns" href="/admin/premium">Buy premium</a>
       <% } %>
     </div>
   </div>
