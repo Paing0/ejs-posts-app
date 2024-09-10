@@ -47,13 +47,12 @@ button {
 }
 
 nav {
-  width: 60%;
-  margin: 0 auto;
+  width: 80%;
+  margin: 0 auto 10px auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--primary-color);
-  padding: 0 10px;
 }
 
 nav a,
@@ -74,7 +73,7 @@ nav .right-side {
 
 .header,
 .profile {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
 }
 
@@ -89,8 +88,24 @@ nav .right-side {
 .user-profile {
   margin: 40px 0 20px 0;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+}
+.profile-photo {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 5%;
+  margin-bottom: 10px;
+  object-fit: cover;
+}
+
+.profile-photo-home {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 5%;
+  margin-right: 10px;
+  object-fit: cover;
 }
 
 .profile-username,
@@ -98,8 +113,16 @@ nav .right-side {
   color: var(--secondary-color);
   font-size: 18px;
   font-weight: 600;
-  padding-left: 80px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+}
+.profile-no-post {
+  width: 60%;
+  margin: 0 auto;
+}
+.profile-no-post h1 {
+  font-size: 2rem;
+  margin-top: 20px;
+  color: var(--secondary-color);
 }
 
 .icon-down-5 {
@@ -114,8 +137,13 @@ nav .right-side {
 
 .username-pfp-premium-btns {
   text-align: center;
-  width: 100%;
   margin-bottom: 0px;
+  margin-right: 10px;
+}
+.username-pfp-premiun-btns-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .no-post-yet {
@@ -135,7 +163,7 @@ nav .right-side {
 
 .post-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   padding: 0 80px;
   gap: 20px;
 }
@@ -325,15 +353,30 @@ textarea {
 .payment-details {
   width: 60%;
   margin: 0 auto;
+  color: var(--primary-color);
+  color: white;
 }
-.p-details h1 {
-  font-size: 3rem;
+.payment-details div {
+  padding: 20px;
+  border-radius: 10px;
+  background-color: var(--primary-color);
 }
-.p-details span {
+.payment-button {
+  border-radius: 10px;
+}
+.payment-details h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  color: #e6a85c;
+}
+
+.payment-details p {
+  margin-bottom: 5px;
+}
+.payment-details span {
   font-weight: bold;
 }
-.p-details .status {
-  background-color: green;
+.payment-details .status {
   color: #fff;
   padding: 1px 3px 1px 3px;
 }
@@ -366,7 +409,7 @@ textarea {
 .material-account-circle-f4 {
   font-size: 4rem;
   color: var(--primary-color);
-  font-variation-settings: "FILL" 1, "wght" 200, "GRAD" 0, "opsz" 24;
+  font-variation-settings: "FILL" 1, "wght" 300, "GRAD" 0, "opsz" 24;
 }
 
 /* color */
@@ -382,6 +425,9 @@ textarea {
 .pl-80 {
   padding-left: 80px;
 }
+.ml-0 {
+  margin-left: 0px;
+}
 
 .ml-10 {
   margin-left: 10px;
@@ -395,6 +441,13 @@ textarea {
   margin-top: 0;
 }
 
+.mb-30 {
+  margin-bottom: 30px;
+}
+.mb-50 {
+  margin-bottom: 50px;
+}
+
 .ml--10 {
   margin-left: -10px;
 }
@@ -404,4 +457,15 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.flex-align-center {
+  display: flex;
+  align-items: center;
+}
+.flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
+.flex-column {
+  flex-direction: column;
 }

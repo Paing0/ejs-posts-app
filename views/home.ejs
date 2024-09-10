@@ -3,17 +3,14 @@
 <% } %>
 
 <section class="header">
-  <div>
-    <h1 class="pl-80 title">Recent posts</h1>
-    <% if (postsArr.length === 0 && isLogin) { %>
-    <div class="no-post-yet">
-      <h3>No post yet.</h3>
-      <a href="/admin/create-post">Create a new post</a>
-    </div>
-    <% } %>
+  <% if (postsArr.length === 0 && isLogin) { %>
+  <div class="no-post-yet">
+    <h3>No post yet.</h3>
+    <a href="/admin/create-post">Create a new post</a>
   </div>
+  <% } %>
 
-  <div class="post-container">
+  <div class="post-container mb-30">
     <% for (let post of postsArr) { %>
     <div class="post-box">
       <img
@@ -29,22 +26,29 @@
       </p>
       <hr />
 
-      <div class="flex-center">
+      <div class="flex-align-center">
         <% if (post.userId._id.toString() == currentUserId.toString()) { %>
         <a href="/admin/profile">
-          <span
-            class="material-symbols-outlined material-account-circle-f4 icon-down-7 ml--10"
-          >
+          <% if(post.userId.profile_imgUrl && post.userId.isPremium ){ %> <img
+          class="profile-photo-home ml-0" src="<%= "/" +
+          post.userId.profile_imgUrl %>" alt="<%= post.userId.username %>" /> <%
+          } else { %>
+          <span class="material-symbols-outlined material-account-circle-f4">
             account_circle
           </span>
+          <% } %>
         </a>
-        <% } else { %>
+        <% } else if(post.userId._id.toString() !== currentUserId.toString()) {
+        %>
         <a href="/profile/<%= post.userId._id %>">
-          <span
-            class="material-symbols-outlined material-account-circle-f4 icon-down-7 ml--10"
-          >
+          <% if(post.userId.profile_imgUrl && post.userId.isPremium) {%> <img
+          class="profile-photo-home ml-0" src="<%= "/" +
+          post.userId.profile_imgUrl %>" alt="<%= post.userId.username %>" /> <%
+          } else { %>
+          <span class="material-symbols-outlined material-account-circle-f4">
             account_circle
           </span>
+          <% } %>
         </a>
 
         <% } %>

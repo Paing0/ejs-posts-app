@@ -4,7 +4,7 @@
   <% if(errorMsg){ %>
   <p class="error-msg"><%= errorMsg %></p>
   <% } %>
-  <form action="/admin/setusername" method="post">
+  <form action="/admin/set-username" method="post">
     <input hidden value="<%= csrfToken %>" name="_csrf" />
     <div>
       <label for="username">Enter username</label>

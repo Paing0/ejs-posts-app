@@ -1,10 +1,15 @@
-<%- include("../includes/head") %>
-<section class="profile">
+<%- include("../includes/head") %> <% if(postsArr.length > 0 ){ %>
+<section class="profile mb-50">
   <div class="user-profile">
-    <div>
-      <span class="material-symbols-outlined material-account-circle-f6 pl-80">
+    <div class="flex-align-center flex-column">
+      <% if(postsArr[0].userId.profile_imgUrl && postsArr[0].userId.isPremium)
+      {%> <img class="profile-photo" src="<%= "/" +
+      postsArr[0].userId.profile_imgUrl %>" alt="<%= postsArr[0].userId.username
+      %>" /> <% } else { %>
+      <span class="material-symbols-outlined material-account-circle-f6">
         account_circle
       </span>
+      <% } %>
       <p class="profile-email"><%= currentUserEmail %></p>
       <p
         class="profile-username <%= postsArr[0].userId.username ? 'premium-username' : '' %>"
@@ -19,23 +24,28 @@
         <% } %> <% } %>
       </p>
     </div>
-    <div class="username-premium-btns">
-      <a class="username-pfp-premium-btns" href="/admin/username"
-        >Set username</a
-      >
-      <% if(postsArr[0].userId.isPremium){ %>
-      <a class="username-pfp-premium-btns" href="/admin/premium-image"
-        >Set profile picture</a
-      >
+    <div class="username-pfp-premiun-btns-container">
+      <% if(postsArr[0].userId.username) { %>
+      <a class="username-pfp-premium-btns" href="/admin/username">
+        Update username
+      </a>
+      <% } else{%>
+      <a class="username-pfp-premium-btns" href="/admin/username">
+        Set username
+      </a>
+      <% } %> <% if(postsArr[0].userId.isPremium){ %>
+      <a class="username-pfp-premium-btns" href="/admin/profile-image"
+        >Set profile picture
+      </a>
       <a class="username-pfp-premium-btns" href="/admin/premium-details"
-        >Check premium status</a
-      >
+        >Check premium status
+      </a>
       <% } else{%>
       <a class="username-pfp-premium-btns" href="/admin/premium">Buy premium</a>
       <% } %>
     </div>
   </div>
-  <div class="post-container">
+  <div class="post-container mb-50">
     <% for(let post of postsArr) { %>
     <div class="post-box">
       <img
@@ -68,4 +78,9 @@
     <% } %>
   </div>
 </section>
-<%- include("../includes/foot") %>
+<% }else{ %>
+<section class="profile-no-post">
+  <h1>Create a new post first</h1>
+  <a href="/admin/create-post">Create Post</a>
+</section>
+<% } %> <%- include("../includes/foot") %>

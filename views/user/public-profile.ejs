@@ -1,9 +1,13 @@
 <%- include("../includes/head") %>
-<section class="profile">
-  <div>
-    <span class="material-symbols-outlined material-account-circle-f6 pl-80">
+<section class="profile mb-50">
+  <div class="flex-align-center flex-column">
+    <% if(postsArr[0].userId.profile_imgUrl && postsArr[0].userId.isPremium) {%>
+    <img class="profile-photo" src="<%= "/" + postsArr[0].userId.profile_imgUrl
+    %>" alt="<%= postsArr[0].userId.username %>" /> <% } else { %>
+    <span class="material-symbols-outlined material-account-circle-f6">
       account_circle
     </span>
+    <% } %>
     <p class="profile-email"><%= currentUserEmail %></p>
     <p
       class="profile-username <%= postsArr[0].userId.username ? 'premium-username' : '' %>"
@@ -18,7 +22,7 @@
       <% } %> <% } %>
     </p>
   </div>
-  <div class="post-container">
+  <div class="post-container mb-50">
     <% for(let post of postsArr) { %>
     <div class="post-box">
       <img

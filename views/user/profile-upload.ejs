@@ -1,0 +1,16 @@
+<%- include("../includes/head") %>
+<section class="mx-auto">
+  <h1 class="title">Set profile picture</h1>
+  <% if(errorMsg){ %>
+  <p class="error-msg"><%= errorMsg %></p>
+  <% } %>
+  <form action="/admin/set-profile" method="post" enctype="multipart/form-data">
+    <input hidden value="<%= csrfToken %>" name="_csrf" />
+    <div>
+      <label for="photo">Upload image</label>
+      <input type="file" id="photo" name="photo" />
+    </div>
+    <button class="right">Upload photo</button>
+  </form>
+</section>
+<%- include("../includes/foot") %>

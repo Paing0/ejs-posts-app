@@ -3,7 +3,7 @@ const deleteFile = require("../utils/deleteFile")
 const { validationResult } = require("express-validator")
 const { formatISO9075 } = require("date-fns")
 
-const POST_PER_PAGE = 6
+const POST_PER_PAGE = 4
 
 exports.createPost = (req, res, next) => {
   const { title, description } = req.body
@@ -60,7 +60,7 @@ exports.renderHomePage = (req, res, next) => {
       totalPostCount = totalPost
       return Post.find() // find all posts
         .select("title description imgUrl") // select the fields
-        .populate("userId", "email isPremium username")
+        .populate("userId", "email isPremium username profile_imgUrl")
         .skip((pageNumber - 1) * POST_PER_PAGE)
         .limit(POST_PER_PAGE) // populate the userId field with the email from the User model
         .sort({ createdAt: -1 }) // sort posts by title in ascending order

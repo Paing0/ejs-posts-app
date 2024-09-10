@@ -1,14 +1,18 @@
 <%- include("../includes/head") %>
 <section class="payment-details">
-  <h1>Premium details</h1>
-  <p>Customer_id - <span><%= customer_id %></span></p>
-  <p>Country - <span><%= country %></span></p>
-  <% if(postal_code) {%>
-  <p>Postal code - <span><%= postal_code %></span></p>
-  <% } %>
-  <p>Email - <span><%= email %></span></p>
-  <p>Name - <span><%= name %></span></p>
-  <p>Invoice_id - <span><%= invoice_id %></span></p>
-  <p>Status - <span class="status"><%= status %></span></p>
+  <div>
+    <h1>Premium details</h1>
+    <p>Customer_id - <span><%= customer_id %></span></p>
+    <p>Country - <span><%= country %></span></p>
+    <% if(postal_code) {%>
+    <p>Postal code - <span><%= postal_code %></span></p>
+    <% } %>
+    <p>Email - <span><%= email %></span></p>
+    <p>Name - <span><%= name %></span></p>
+    <p>Invoice_id - <span><%= invoice_id %></span></p>
+    <p>Status - <span><%= status %></span></p>
+  </div>
+  <a class="payment-button" href="/admin/profile">Go back to profile</a>
 </section>
+
 <%- include("../includes/foot") %>
